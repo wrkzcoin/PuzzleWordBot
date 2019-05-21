@@ -1,0 +1,17 @@
+# MySQL connection information
+mysql:
+  host: "localhost"
+  user: "puzzlebot"
+  password: "passworddb"
+  dbname: "puzzlebot"
+discord:
+  token: "TokenHere"
+  channelID: 574898637499400192  # replace this
+  ownerID: 386761001808166912  # replace this
+listfile:
+  file1: "oxford3000.txt"
+  file2: "oxford5000.txt"
+  file3: "wordlist.10000"
+  minlen: 4
+  maxlen: 8
+
