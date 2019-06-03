@@ -13,5 +13,5 @@ listfile:
   file2: "oxford5000.txt"
   file3: "wordlist.10000"
   minlen: 4
-  maxlen: 8
+  maxlen: 12
 

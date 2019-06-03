@@ -326,7 +326,7 @@ async def hint(ctx):
                 char_list = list(puzzle_str)
                 for n, i in enumerate(char_list):
                     if i != ' ':
-                        if ((n + 1) % 3 == 0 and n > 0) or n == 0 or n == 4 or n == 7:
+                        if ((n + 1) % 3 == 0 and n > 0) or n == 0 or n == 4 or n == 7 or n == 10:
                             char_list[n] = ':regional_indicator_'+i.lower()+':'
                         else:
                             char_list[n] = ':white_medium_square:'
