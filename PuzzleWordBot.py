@@ -100,6 +100,7 @@ class question(object):
         self.answer = _q
         self.answer = str(self.answer).translate(ignore)
         self.hint = False
+        self.hint2 = False
         print('Puzzled word: ' + _q.upper())
         print('Puzzle Answer: ' + self.answer.upper())
 
@@ -317,22 +318,40 @@ async def hint(ctx):
         if q is None:
             await ctx.send('There is no new puzzle yet.')
         else:
-            if q.hint == True:
-                await ctx.send('Already hint..')
+            if q.hint == True and q.hint2 == True:
+                await ctx.send('I already gave hint..')
                 return
-            puzzle_str = q.answer.upper()
-            char_list = list(puzzle_str)
-            for n, i in enumerate(char_list):
-                if i != ' ':
-                    if (n + 1) % 3 == 0 and n > 0:
-                        char_list[n] = ':regional_indicator_'+i.lower()+':'
+            elif q.hint == True and q.hint2 == False:
+                puzzle_str = q.answer.upper()
+                char_list = list(puzzle_str)
+                for n, i in enumerate(char_list):
+                    if i != ' ':
+                        if ((n + 1) % 3 == 0 and n > 0) or n == 0 or n == 4 or n == 7:
+                            char_list[n] = ':regional_indicator_'+i.lower()+':'
+                        else:
+                            char_list[n] = ':white_medium_square:'
                     else:
                         char_list[n] = ':white_medium_square:'
-                else:
-                    char_list[n] = ':white_medium_square:'
-            answer_str = ' '.join(char_list)
-            q.hint = True
-            await ctx.send(f'**Hint**\n{answer_str}')
+                answer_str = ' '.join(char_list)
+                q.hint = True
+                q.hint2 = True
+                await ctx.send(f'**Second Hint**\n{answer_str}')
+                return
+            else:
+                puzzle_str = q.answer.upper()
+                char_list = list(puzzle_str)
+                for n, i in enumerate(char_list):
+                    if i != ' ':
+                        if (n + 1) % 3 == 0 and n > 0:
+                            char_list[n] = ':regional_indicator_'+i.lower()+':'
+                        else:
+                            char_list[n] = ':white_medium_square:'
+                    else:
+                        char_list[n] = ':white_medium_square:'
+                answer_str = ' '.join(char_list)
+                q.hint = True
+                await ctx.send(f'**First Hint**\n{answer_str}')
+                return
 
 
 @click.command()
