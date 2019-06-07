@@ -39,6 +39,8 @@ WORDLIST_1 = config.listfile.file1
 WORDLIST_2 = config.listfile.file2
 WORDLIST_3 = config.listfile.file3
 
+BADWORD_1 = config.listfile.badword1
+
 bot = AutoShardedBot(command_prefix=['.', '!', '?'], case_insensitive=True)
 bot.remove_command("help")
 
@@ -76,7 +78,16 @@ def load_words():
     for item in valid_words:
         if config.listfile.minlen <= len(item) <= config.listfile.maxlen and re.match('[a-zA-Z]+', item):
             wordList.append(item)
-    return wordList
+
+    badword_list = []
+    with open(BADWORD_1) as word_file:
+        badword_list = set(word_file.read().split())
+
+    print('Word from dict: '+str(len(wordList)))
+    newWordList = [x for x in wordList if x not in badword_list]
+    print('Word after bad word:'+str(len(newWordList))) 
+    return newWordList
+
 
 english_words = load_words()
 q = None
