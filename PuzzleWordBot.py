@@ -206,7 +206,7 @@ async def on_message(message):
         await message.channel.send('```css\n'
                                 'You have %d seconds to win each puzzle.```' % x)
         await message.channel.send(f'{HiScoreMsg}')
-        await message.channel.send('#'+str('{:,.0f}'.format(q.LastQuestionNumb()))+' New word puzzle: '+ q.question + '\n')
+        await message.channel.send('#'+str('{:,.0f}'.format(q.LastQuestionNumb()))+' New word puzzle:\n'+ q.question + '\n')
         i = 0
         while IN_PUZZLEWORD:
             def check(m):
@@ -247,7 +247,7 @@ async def on_message(message):
                     break
                 else:
                     q = question()
-                    await message.channel.send('#'+str('{:,.0f}'.format(q.LastQuestionNumb()))+' **New word puzzle**: '+ q.question + '\n')
+                    await message.channel.send('#'+str('{:,.0f}'.format(q.LastQuestionNumb()))+' **New word puzzle**:\n'+ q.question + '\n')
             elif msg.author == bot.user:
                 continue
             elif q.checkPuzzle(msg):
@@ -310,7 +310,7 @@ async def on_message(message):
                 q = None
                 await asyncio.sleep(30)
                 q = question()
-                await msg.channel.send('#'+str('{:,.0f}'.format(q.LastQuestionNumb()))+' **New word puzzle**: ' + q.question + '\n')
+                await msg.channel.send('#'+str('{:,.0f}'.format(q.LastQuestionNumb()))+' **New word puzzle**:\n' + q.question + '\n')
                 i += 1
             elif msg.content.upper() == '.TOP':
                 await message.channel.send(f'{HiScoreMsg}')
@@ -339,7 +339,7 @@ async def hint(ctx):
                 char_list = list(puzzle_str)
                 for n, i in enumerate(char_list):
                     if i != ' ':
-                        if ((n + 1) % 3 == 0 and n > 0) or n == 0 or n == 4 or n == 7 or n == 10:
+                        if ((n + 1) % 3 == 0 and n > 0) or n == 0 or n == 4 or n == 7 or n == 10 or n == 13 or n == 16:
                             char_list[n] = ':regional_indicator_'+i.lower()+':'
                         else:
                             char_list[n] = ':white_medium_square:'
