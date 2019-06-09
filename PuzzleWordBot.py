@@ -101,7 +101,9 @@ class question(object):
         global english_words
         _q = random.choice(english_words)
         char_list = list(_q)
-        random.shuffle(char_list)
+        # Check if the random shuffle is same as the answer
+        while _q.upper() == (''.join(char_list)).upper():
+            random.shuffle(char_list)
         for n, i in enumerate(char_list):
             if i != ' ':
                 char_list[n] = ':regional_indicator_'+i+':'
