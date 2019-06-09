@@ -102,7 +102,7 @@ class question(object):
         _q = random.choice(english_words)
         char_list = list(_q)
         # Check if the random shuffle is same as the answer
-        while _q.upper() == (''.join(char_list)).upper() or ("-" in char_list):
+        while ("-" in char_list) or (''.join(char_list) in english_words):
             random.shuffle(char_list)
         for n, i in enumerate(char_list):
             if i != ' ':
