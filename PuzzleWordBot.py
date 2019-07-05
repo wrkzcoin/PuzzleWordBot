@@ -250,7 +250,11 @@ async def on_message(message):
                     await message.channel.send('#'+str('{:,.0f}'.format(q.LastQuestionNumb()))+' **New word puzzle**:\n'+ q.question + '\n')
             elif msg.author == bot.user:
                 continue
-            elif q.checkPuzzle(msg):
+            elif q.checkPuzzle(msg) == False:
+                # if someone typed, reset it to 0
+                numNo = 0
+                continue
+            elif q.checkPuzzle(msg) == True:
                 answer_str = msg.content.upper()
                 await msg.channel.send('**Correct, %s!**```css\n The answer is: %s.```' %
                                           (msg.author.mention, answer_str))
@@ -365,6 +369,19 @@ async def hint(ctx):
                 q.hint = True
                 await ctx.send(f'**First Hint**\n{answer_str}')
                 return
+
+
+@bot.event
+async def on_command_error(ctx, error):
+    print(error)
+    if isinstance(error, commands.NoPrivateMessage):
+        pass
+    elif isinstance(error, commands.DisabledCommand):
+        pass
+    elif isinstance(error, commands.MissingRequiredArgument):
+        pass
+    elif isinstance(error, commands.CommandNotFound):
+        pass
 
 
 @click.command()
