@@ -51,9 +51,9 @@ def openConnection():
     global conn
     try:
         if conn is None:
-            conn = pymysql.connect(DBHOST, user=DBUSER, passwd=DBPASS, db=DBNAME, charset='utf8', cursorclass=pymysql.cursors.DictCursor, connect_timeout=5)
+            conn = pymysql.connect(DBHOST, user=DBUSER, passwd=DBPASS, db=DBNAME, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor, connect_timeout=5)
         elif (not conn.open):
-            conn = pymysql.connect(DBHOST, user=DBUSER, passwd=DBPASS, db=DBNAME, charset='utf8', cursorclass=pymysql.cursors.DictCursor, connect_timeout=5)    
+            conn = pymysql.connect(DBHOST, user=DBUSER, passwd=DBPASS, db=DBNAME, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor, connect_timeout=5)    
     except:
         print("ERROR: Unexpected error: Could not connect to MySql instance.")
         sys.exit()
