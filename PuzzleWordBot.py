@@ -41,7 +41,11 @@ WORDLIST_3 = config.listfile.file3
 
 BADWORD_1 = config.listfile.badword1
 
-bot = AutoShardedBot(command_prefix=['.', '!', '?'], case_insensitive=True)
+intents = discord.Intents.default()
+intents.members = True
+intents.presences = True
+
+bot = AutoShardedBot(command_prefix=['.', '!', '?'], case_insensitive=True, intents=intents)
 bot.remove_command("help")
 
 IN_PUZZLEWORD = False
@@ -51,9 +55,9 @@ def openConnection():
     global conn
     try:
         if conn is None:
-            conn = pymysql.connect(DBHOST, user=DBUSER, passwd=DBPASS, db=DBNAME, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor, connect_timeout=5)
-        elif (not conn.open):
-            conn = pymysql.connect(DBHOST, user=DBUSER, passwd=DBPASS, db=DBNAME, charset='utf8mb4', cursorclass=pymysql.cursors.DictCursor, connect_timeout=5)    
+            conn = pymysql.connect(host=DBHOST, user=DBUSER, password=DBPASS, db=DBNAME, cursorclass=pymysql.cursors.DictCursor)
+        elif not conn.open:
+            conn = pymysql.connect(host=DBHOST, user=DBUSER, password=DBPASS, db=DBNAME, cursorclass=pymysql.cursors.DictCursor)    
     except:
         print("ERROR: Unexpected error: Could not connect to MySql instance.")
         sys.exit()
@@ -197,7 +201,7 @@ async def on_message(message):
                 for m in highScoreUser:
                     user = bot.get_user(id=int(m['user_id']))
                     if user:
-                        HiScoreMsg = HiScoreMsg + '`' + user.name + '`' + ': `' + str(m['score']) + ' pts` | '
+                        HiScoreMsg = HiScoreMsg + '{}#{}'.format(user.name, user.discriminator) + ': `' + str(m['score']) + ' pts` | '
         finally:
             conn.close()
 
@@ -300,7 +304,7 @@ async def on_message(message):
                                 for m in highScoreUser:
                                     user = bot.get_user(id=int(m['user_id']))
                                     if user:
-                                        HiScoreMsg = HiScoreMsg + '`' + str(user.name) + '`' + ': `' + str(m['score']) + 'pts` | '
+                                        HiScoreMsg = HiScoreMsg + '{}#{}'.format(user.name, user.discriminator) + ': `' + str(m['score']) + 'pts` | '
                              #print(HiScoreMsg)
                 finally:
                     conn.close()
